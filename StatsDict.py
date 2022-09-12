@@ -1,14 +1,36 @@
+"""
+{
+        "name": Name of the table in the output csv and gdb,
+        "alias": Alias of table in gdb,
+        "geography": Geography level of the dataset (eg county, block group)
+        "fullTable": If downloading a full table, the name of the table goes here
+                     Note that the API allows a maximum of 50 stats, so if we need
+                     more than that, we need to download the whole table
+        "data": {
+            Statistic Name: Statistic alias,
+            Statistic Name: Statistic alias,
+            Statistic Name: Statistic alias,
+            Statistic Name: Statistic alias
+        },
+        "functions" [ # Additional columns added by performing functions on other columns
+            {
+                "name": column name,
+                "alias": column alias
+                "operation": [sum], Only sum available right now
+                "statistics": [list of statistics to apply operation to],
+            }
+        ]
+    }
+"""
+
+
 ACS_Tables = [
     {
-        "TableName": "Population_Age_Sex",
-        "TableAlias": "Population by Age and Sex",
-        "Data": {
-            # Total Population
-            "B01003_001E": "Total Population",
-
-            # Population 65+
-            "B09020_001E": "Total Population 65 Years and Over",
-
+        "name": "Population_Age_Sex",
+        "alias": "Population by Age and Sex",
+        "geography": "block group",
+        "fullTable": None,
+        "data": {
             # Sex by Age
             "B01001_002E": "Total Male",
             "B01001_003E": "Males Under 5 years",
@@ -58,12 +80,28 @@ ACS_Tables = [
             "B01001_047E": "Females 75 to 79 years",
             "B01001_048E": "Females 80 to 84 years",
             "B01001_049E": "Females 85 years and over",
-        }
+        },
+        "functions": [
+            {
+                "name": "Pop_65_Plus",
+                "alias": "Population 65+",
+                "operation": "sum",
+                "statistics": ["B01001_044E","B01001_045E","B01001_046E","B01001_047E","B01001_048E","B01001_049E","B01001_020E","B01001_021E","B01001_022E","B01001_023E","B01001_024E","B01001_025E"],
+            },
+            {
+                "name": "Pop_75_Plus",
+                "alias": "Population 75+",
+                "operation": "sum",
+                "statistics": ["B01001_047E","B01001_048E","B01001_049E","B01001_023E","B01001_024E","B01001_025E"],
+            }
+        ]
     },
     {
-        "TableName": "Hispanic_Latino_Origin",
-        "TableAlias": "Hispanic or Latino Origin",
-        "Data": {
+        "name": "Hispanic_Latino_Origin",
+        "alias": "Hispanic or Latino Origin",
+        "geography": "block group",
+        "fullTable": None,
+        "data": {
             "B03002_012E": "Total Hispanic or Latino",
             "B03002_013E": "Hispanic or Latino - White alone",
             "B03002_014E": "Hispanic or Latino - Black or African American alone",
@@ -74,12 +112,15 @@ ACS_Tables = [
             "B03002_019E": "Hispanic or Latino - Two or more races",
             "B03002_020E": "Hispanic or Latino - Two races including Some other race",
             "B03002_021E": "Hispanic or Latino - Two races excluding Some other race, and three or more races"
-        }
+        },
+        "functions": None
     },
     {
-        "TableName": "Ratio_Income_Poverty_Level",
-        "TableAlias": "Ratio of Income to Poverty Level",
-        "Data": {
+        "name": "Ratio_Income_Poverty_Level",
+        "alias": "Ratio of Income to Poverty Level",
+        "geography": "block group",
+        "fullTable": None,
+        "data": {
             "C17002_002E": "Under .50",
             "C17002_003E": ".50 to .99",
             "C17002_004E": "1.00 to 1.24",
@@ -87,12 +128,15 @@ ACS_Tables = [
             "C17002_006E": "1.50 to 1.84",
             "C17002_007E": "1.85 to 1.99",
             "C17002_008E": "2.00 and over"
-        }
+        },
+        "functions": None
     },
     {
-        "TableName": "Transportation_To_Work",
-        "TableAlias": "Means of Transportation to Work by Travel Time to Work",
-        "Data": {
+        "name": "Transportation_To_Work",
+        "alias": "Means of Transportation to Work by Travel Time to Work",
+        "geography": "county",
+        "fullTable": "B08534",
+        "data": {
             "B08534_001E": "Total:",
             "B08534_002E": "Less than 10 minutes",
             "B08534_003E": "10 to 14 minutes",
@@ -213,12 +257,15 @@ ACS_Tables = [
             "B08534_118E": "35 to 44 minutes",
             "B08534_119E": "45 to 59 minutes",
             "B08534_120E": "60 or more minutes"
-        }
+        },
+        "functions": None
     },
     {
-        "TableName": "Age_By_Language",
-        "TableAlias": "Age by Language Spoken at Home",
-        "Data": {
+        "name": "Age_By_Language",
+        "alias": "Age by Language Spoken at Home",
+        "geography": "block group",
+        "fullTable": "B16004",
+        "data": {
             # Age by Language Spoken at Home by Ability to Speak English for the Population, 5 Years and Over
             "B16004_001E": "Total:",
             "B16004_002E": "5 to 17 years:",
@@ -287,12 +334,15 @@ ACS_Tables = [
             "B16004_065E": "Speak English well",
             "B16004_066E": "Speak English not well",
             "B16004_067E": "Speak English not at all"
-        }
+        },
+        "functions": None
     },
     {
-        "TableName": "Employment_Status",
-        "TableAlias": "Employment Status for the Population 16 Years and Over",
-        "Data": {
+        "name": "Employment_Status",
+        "alias": "Employment Status for the Population 16 Years and Over",
+        "geography": "block group",
+        "fullTable": None,
+        "data": {
             # Employment Status for the Population 16 Years and Over
             "B23025_001E": "Total:",
             "B23025_002E": "In labor force:",
@@ -301,6 +351,7 @@ ACS_Tables = [
             "B23025_005E": "Unemployed",
             "B23025_006E": "Armed Forces",
             "B23025_007E": "Not in labor force"
-        }
+        },
+        "functions": None
     }
 ]
