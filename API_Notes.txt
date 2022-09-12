@@ -1,0 +1,3 @@
+Test URL:
+
+https://api.census.gov/data/2020/acs/acs5?get=B01001_007E&for=block%20group:*&in=state:51%20county:*
