@@ -16,8 +16,8 @@
             {
                 "name": column name,
                 "alias": column alias
-                "operation": [sum], Only sum available right now
-                "statistics": [list of statistics to apply operation to],
+                "operation": sum or percent
+                "statistics": [for sum: list of statistics to apply operation to] or [for percent: part, whole],
             }
         ]
     }
@@ -82,6 +82,19 @@ ACS_Tables = [
             "B01001_049E": "Females 85 years and over",
         },
         "functions": [
+
+            {
+                "name": "Pop_Total",
+                "alias": "Total Population",
+                "operation": "sum",
+                "statistics": ["B01001_002E","B01001_026E"],
+            },
+            {
+                "name": "Pop_18_64",
+                "alias": "Population 18-64",
+                "operation": "sum",
+                "statistics": ["B01001_007E","B01001_008E","B01001_009E","B01001_010E","B01001_011E","B01001_012E","B01001_013E","B01001_014E","B01001_015E","B01001_016E","B01001_017E","B01001_018E","B01001_019E","B01001_031E","B01001_032E","B01001_033E","B01001_034E","B01001_035E","B01001_036E","B01001_037E","B01001_038E","B01001_039E","B01001_040E","B01001_041E","B01001_042E","B01001_043E"],
+            },
             {
                 "name": "Pop_65_Plus",
                 "alias": "Population 65+",
@@ -97,134 +110,21 @@ ACS_Tables = [
         ]
     },
     {
-        "name": "Hispanic_Latino_Origin",
-        "alias": "Hispanic or Latino Origin",
-        "geography": "block group",
+        "name": "No_Vehicles_Available",
+        "alias": "Households with No Vehicle Available",
+        "geography": "tract",
         "fullTable": None,
         "data": {
-            "B03002_012E": "Total Hispanic or Latino",
-            "B03002_013E": "Hispanic or Latino - White alone",
-            "B03002_014E": "Hispanic or Latino - Black or African American alone",
-            "B03002_015E": "Hispanic or Latino - American Indian and Alaska Native alone",
-            "B03002_016E": "Hispanic or Latino - Asian alone",
-            "B03002_017E": "Hispanic or Latino - Native Hawaiian and Other Pacific Islander alone",
-            "B03002_018E": "Hispanic or Latino - Some other race alone",
-            "B03002_019E": "Hispanic or Latino - Two or more races",
-            "B03002_020E": "Hispanic or Latino - Two races including Some other race",
-            "B03002_021E": "Hispanic or Latino - Two races excluding Some other race, and three or more races"
+            "B08201_001E": "Total Households",
+            "B08201_002E": "Households with no vehicle available"
         },
-        "functions": None
-    },
-    {
-        "name": "Ratio_Income_Poverty_Level",
-        "alias": "Ratio of Income to Poverty Level",
-        "geography": "block group",
-        "fullTable": None,
-        "data": {
-            "C17002_002E": "Under .50",
-            "C17002_003E": ".50 to .99",
-            "C17002_004E": "1.00 to 1.24",
-            "C17002_005E": "1.25 to 1.49",
-            "C17002_006E": "1.50 to 1.84",
-            "C17002_007E": "1.85 to 1.99",
-            "C17002_008E": "2.00 and over"
-        },
-        "functions": None
-    },
-    {
-        "name": "Transportation_To_Work",
-        "alias": "Means of Transportation to Work by Travel Time to Work",
-        "geography": "county",
-        "fullTable": "B08534",
-        "data": {
-            "B08534_001E": "Total Commuters",
-            "B08534_002E": "Commuters (< 10 mins)",
-            "B08534_003E": "Commuters (10 to 14 mins)",
-            "B08534_004E": "Commuters (15 to 19 mins)",
-            "B08534_005E": "Commuters (20 to 24 mins)",
-            "B08534_006E": "Commuters (25 to 29 mins)",
-            "B08534_007E": "Commuters (30 to 34 mins)",
-            "B08534_008E": "Commuters (35 to 44 mins)",
-            "B08534_009E": "Commuters (45 to 59 mins)",
-            "B08534_010E": "Commuters (> 60 mins)",
-            "B08534_021E": "Total Drove alone",
-            "B08534_022E": "Drove alone (< 10 mins)",
-            "B08534_023E": "Drove alone (10 to 14 mins)",
-            "B08534_024E": "Drove alone (15 to 19 mins)",
-            "B08534_025E": "Drove alone (20 to 24 mins)",
-            "B08534_026E": "Drove alone (25 to 29 mins)",
-            "B08534_027E": "Drove alone (30 to 34 mins)",
-            "B08534_028E": "Drove alone (35 to 44 mins)",
-            "B08534_029E": "Drove alone (45 to 59 mins)",
-            "B08534_030E": "Drove alone (> 60 minutes)",
-            "B08534_031E": "Carpooled",
-            "B08534_032E": "Carpooled (< 10 mins)",
-            "B08534_033E": "Carpooled (10 to 14 mins)",
-            "B08534_034E": "Carpooled (15 to 19 mins)",
-            "B08534_035E": "Carpooled (20 to 24 mins)",
-            "B08534_036E": "Carpooled (25 to 29 mins)",
-            "B08534_037E": "Carpooled (30 to 34 mins)",
-            "B08534_038E": "Carpooled (35 to 44 mins)",
-            "B08534_039E": "Carpooled (45 to 59 mins)",
-            "B08534_040E": "Carpooled (> 60  mins)",
-            "B08534_061E": "Total Public transportation (excluding taxicab)",
-            "B08534_062E": "Public transportation (< 10 mins)",
-            "B08534_063E": "Public transportation (10 to 14 mins)",
-            "B08534_064E": "Public transportation (15 to 19 mins)",
-            "B08534_065E": "Public transportation (20 to 24 mins)",
-            "B08534_066E": "Public transportation (25 to 29 mins)",
-            "B08534_067E": "Public transportation (30 to 34 mins)",
-            "B08534_068E": "Public transportation (35 to 44 mins)",
-            "B08534_069E": "Public transportation (45 to 59 mins)",
-            "B08534_070E": "Public transportation (> 60 mins)",
-            "B08534_101E": "Total Walked",
-            "B08534_102E": "Walked (< 10 mins)",
-            "B08534_103E": "Walked (10 to 14 mins)",
-            "B08534_104E": "Walked (15 to 19 mins)",
-            "B08534_105E": "Walked (20 to 24 mins)",
-            "B08534_106E": "Walked (25 to 29 mins)",
-            "B08534_107E": "Walked (30 to 34 mins)",
-            "B08534_108E": "Walked (35 to 44 mins)",
-            "B08534_109E": "Walked (45 to 59 mins)",
-            "B08534_110E": "Walked (> 60 mins)",
-            "B08534_111E": "Total Taxicab, motorcycle, bicycle, or other means",
-            "B08534_112E": "Taxicab, motorcycle, bicycle, or other (< 10 mins)",
-            "B08534_113E": "Taxicab, motorcycle, bicycle, or other (10 to 14 mins)",
-            "B08534_114E": "Taxicab, motorcycle, bicycle, or other (15 to 19 mins)",
-            "B08534_115E": "Taxicab, motorcycle, bicycle, or other (20 to 24 mins)",
-            "B08534_116E": "Taxicab, motorcycle, bicycle, or other (25 to 29 mins)",
-            "B08534_117E": "Taxicab, motorcycle, bicycle, or other (30 to 34 mins)",
-            "B08534_118E": "Taxicab, motorcycle, bicycle, or other (35 to 44 mins)",
-            "B08534_119E": "Taxicab, motorcycle, bicycle, or other (45 to 59 mins)",
-            "B08534_120E": "Taxicab, motorcycle, bicycle, or other (> 60 mins)"
-        },
-        "functions": None
-    },
-    {
-        "name": "Employment_Status",
-        "alias": "Employment Status for the Population 16 Years and Over",
-        "geography": "block group",
-        "fullTable": None,
-        "data": {
-            # Employment Status for the Population 16 Years and Over
-            "B23025_001E": "Total",
-            "B23025_002E": "In labor force:",
-            "B23025_003E": "Civilian labor force:",
-            "B23025_004E": "Employed",
-            "B23025_005E": "Unemployed",
-            "B23025_006E": "Armed Forces",
-            "B23025_007E": "Not in labor force"
-        },
-        "functions": None
-    },
-    {
-        "name": "Number_Of_Vehicles",
-        "alias": "Aggregate Number of Vehicles Used in Commuting",
-        "geography": "block group",
-        "fullTable": None,
-        "data": {
-            "B08015_001E": "Aggregate number of vehicles (Car, Truck, or Van) Used in Commuting"
-        },
-        "functions": None
+        "functions": [
+            {
+                "name": "Pct_No_Vehicle",
+                "alias": "Percent of households with no vehicle available",
+                "operation": "percent",
+                "statistics": ["B08201_002E","B08201_001E"],
+            },
+        ]
     }
 ]

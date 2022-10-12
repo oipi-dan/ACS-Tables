@@ -28,6 +28,7 @@ from StatsDict import ACS_Tables
 inputGDB = r"C:\Users\daniel.fourquet\Documents\Tasks\ACS-Tables\censusData.gdb"
 censusCounties = "County"
 censusBlockGroups = "Block_Group"
+censusTracts = "Tracts"
 
 # Output directory for CSV files
 output_dir = r"C:\Users\daniel.fourquet\Documents\Tasks\ACS-Tables\Output"
@@ -40,11 +41,13 @@ def build_url(table, data, geography):
     URL_base = "https://api.census.gov/data/2020/acs/acs5?"
     URL_for = "&for=block%20group:*&in=state:51%20county:*"
 
+    if geography == "county":
+        URL_for = "&for=county:*&in=state:51"
+    if geography == "tract":
+        URL_for = "&for=tract:*&in=state:51"
     if geography == "block group":
         URL_for = "&for=block%20group:*&in=state:51%20county:*"
     
-    if geography == "county":
-        URL_for = "&for=county:*&in=state:51"
 
     if table['fullTable']:
         # Download entire table
@@ -97,7 +100,7 @@ def create_dataframe(table, data):
 
         # Correct GEO_ID field in census blocks.  County and block groups require the same editing
         # but other geographies may be different in the future
-        if table['geography'] in ["block group", "county"]:
+        if table['geography'] in ["block group", "county", "tract"]:
             df['GEO_ID'] = df['GEO_ID'].str.slice(start=9)
 
 
@@ -154,6 +157,8 @@ def create_features(table):
     print("    Creating new feature class")
     if geography == "county":
         inputFeatures = f"{inputGDB}\\{censusCounties}"
+    elif geography == "tract":
+        inputFeatures = f"{inputGDB}\\{censusTracts}"
     else:
         inputFeatures = f"{inputGDB}\\{censusBlockGroups}"
     
