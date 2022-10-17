@@ -98,6 +98,9 @@ def create_dataframe(table, data):
                 if funcOperation == "sum":
                     df[funcName] = df[funcStatistics].sum(axis=1)
 
+                if funcOperation == "percent":
+                    df[funcName] = df[funcStatistics[0]]/df[funcStatistics[1]] * 100
+
         # Correct GEO_ID field in census blocks.  County and block groups require the same editing
         # but other geographies may be different in the future
         if table['geography'] in ["block group", "county", "tract"]:
